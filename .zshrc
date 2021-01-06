@@ -1,7 +1,7 @@
 POWERLEVEL9K_MODE='awesome-patched'
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH:/Users/etienne/Library/Python/2.7/bin
 
 # Path to your oh-my-zsh installation.
 if [[ `uname` == 'Linux' ]]; then
@@ -25,7 +25,7 @@ fi
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
 
 # Set list of themes to load
@@ -124,8 +124,47 @@ if [[ `uname` == 'Linux' ]]; then
   source ~/.bash_aliases
   source ~/.profile 
 
+  # Dev aliases
+  alias behat="./vendor/bin/behat"
+  alias clear-logs="rm ./storage/logs/*"
+
+  # Start DynamoDB (Optania API)
+  ~/Code/optania-api/dynamodb-local
+
 elif [[ `uname` == 'Darwin' ]]; then
   # Aliases
   alias just-do-it="cd ~/Homestead && vagrant up && vagrant ssh"
+
+  # Optania API machines
+  alias ssh-optania-staging-worker-01="ssh -i ~/.ssh/optania-staging.pem ubuntu@ec2-52-60-114-78.ca-central-1.compute.amazonaws.com"
+  alias ssh-optania-staging-api-01="ssh -i ~/.ssh/optania-staging.pem ubuntu@ec2-52-60-119-243.ca-central-1.compute.amazonaws.com"
+  alias ssh-optania-staging-api-02="ssh -i ~/.ssh/optania-staging.pem ubuntu@ec2-52-60-128-177.ca-central-1.compute.amazonaws.com"
+  alias ssh-optania-production-editor="ssh -i ~/.ssh/optania-production.pem ubuntu@ec2-35-182-147-195.ca-central-1.compute.amazonaws.com"
+  alias ssh-optania-production-api-01="ssh -i ~/.ssh/optania-production.pem ubuntu@ec2-35-182-129-127.ca-central-1.compute.amazonaws.com"
+  alias ssh-optania-production-api-02="ssh -i ~/.ssh/optania-production.pem ubuntu@ec2-35-183-102-100.ca-central-1.compute.amazonaws.com"
+  alias ssh-optania-production-worker-01="ssh -i ~/.ssh/optania-production.pem ubuntu@ec2-35-182-84-15.ca-central-1.compute.amazonaws.com"
+  alias ssh-optania-production-worker-02="ssh -i ~/.ssh/optania-production.pem ubuntu@ec2-99-79-195-113.ca-central-1.compute.amazonaws.com"
 fi
 
+  # SAM machines
+  alias ssh-sam-ml-engine="ssh -i ~/.ssh/sam-ml-engine.pem ubuntu@ec2-54-81-39-218.compute-1.amazonaws.com"
+
+alias git-clean-branches="git fetch -p && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D"
+
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/usr/local/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/local/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/usr/local/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/local/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
